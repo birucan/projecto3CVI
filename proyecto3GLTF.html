@@ -1,0 +1,526 @@
+<html>
+	 <head>
+			 <title>proyecto 3</title>
+			 <style>
+	 body { margin: 0; }
+	 canvas { width: 100%; height: 100% }
+		 </style>
+ </head>
+	 <body>
+
+
+
+<script type="module">
+import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/build/three.module.js';
+import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/OrbitControls.js';
+import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/loaders/GLTFLoader.js';
+import {GUI} from 'https://threejsfundamentals.org/threejs/../3rdparty/dat.gui.module.js';
+//import {Interaction} from '/lib/build/three.interaction.module.js';
+//const Interaction =require('/lib/build/three.interaction.module.js')
+
+
+var scene = new THREE.Scene();
+let INTERSECTED;
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+//var camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 1000 );
+
+
+//camera.position.z = 200;
+
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.gammaOutput = true
+//renderer.gammaFactor = 2.2
+renderer.shadowMap.enabled = true;
+renderer.outputEncoding = THREE.sRGBEncoding;
+document.body.appendChild( renderer.domElement );
+
+//var controls = new OrbitControls(camera, renderer.domElement);
+//controls.enableDamping = true;
+//controls.dampingFactor = 0.25;
+//controls.enableZoom = true;
+scene.background = (new THREE.Color(0x04aad6))
+camera.position.set(11.5,5,-4)
+camera.rotation.set(-0.34562117814926746,0.02161795265395755, 0.007783301406860355)
+
+const ambientLight = new THREE.AmbientLight( 0xcccccc, 0.3 );
+				//scene.add( ambientLight );
+
+
+
+
+var studioL1 = new THREE.DirectionalLight(new THREE.Color(0xcccccc), 0.6);
+studioL1.castShadow = true
+studioL1.position.set(3.7, 10.6, -2.6);
+studioL1.target.position.set(5.6,0.4,-4.3)
+studioL1.shadow.bias = -0.004;
+studioL1.shadow.mapSize.width = 2048;
+studioL1.shadow.mapSize.height = 2048;
+
+studioL1.target.updateMatrixWorld();
+var helper = new THREE.DirectionalLightHelper( studioL1, 1 );
+//scene.add( helper );
+
+
+
+
+
+const pLight1 = new THREE.PointLight( 0xff00ff, 0, 100 );
+pLight1.position.set( 2, 6, -2 );
+scene.add( pLight1 );
+const pointLightHelper = new THREE.PointLightHelper( pLight1, 1 );
+//scene.add( pointLightHelper );
+
+scene.add (studioL1)
+
+
+
+
+
+
+function updateCamera() {
+	// update the light target's matrixWorld because it's needed by the helper
+	studioL1.updateMatrixWorld();
+	helper.update();
+	studioL1.target.updateMatrixWorld();
+	// update the light's shadow camera's projection matrix
+	studioL1.shadow.camera.updateProjectionMatrix();
+	// and now update the camera helper we're using to show the light's shadow camera
+	//cameraHelper.update();
+}
+
+//buttons
+const geometry = new THREE.CylinderGeometry( 0.2, 0.2, 0.2, 32 );
+const material = new THREE.MeshStandardMaterial( {color: 0xff0000,transparent:true, opacity: 0.9, metalness:0.5, roughness:0.6} );
+const cylinder1 = new THREE.Mesh( geometry, material );
+cylinder1.rotation.x= 0.4
+cylinder1.position.set(10.08,3.3,-8.7)
+
+
+
+const geometry2 = new THREE.CylinderGeometry( 0.2, 0.2, 0.2, 32 );
+const material2 = new THREE.MeshStandardMaterial( {color: 0xff0000,transparent:true, opacity: 0.9, metalness:0.5, roughness:0.6} );
+const cylinder2 = new THREE.Mesh( geometry2, material2 );
+cylinder2.rotation.x= 0.4
+cylinder2.position.set(11.64,3.3,-8.7)
+
+const geometry3 = new THREE.CylinderGeometry( 0.2, 0.2, 0.2, 32 );
+const material3 = new THREE.MeshStandardMaterial( {color: 0xff0000,transparent:true, opacity: 0.9, metalness:0.5, roughness:0.6} );
+const cylinder3 = new THREE.Mesh( geometry3, material3 );
+cylinder3.rotation.x= 0.4
+cylinder3.position.set(13.18,3.3,-8.7)
+
+const geometry4 = new THREE.CylinderGeometry( 0.2, 0.2, 0.2, 32 );
+const material4 = new THREE.MeshStandardMaterial( {color: 0xff0000,transparent:true, opacity: 0.9, metalness:0.5, roughness:0.6} );
+const cylinder4 = new THREE.Mesh( geometry4, material4 );
+cylinder4.rotation.x= 0.4
+cylinder4.position.set(10.08,3.05,-8.2)
+
+const geometry5 = new THREE.CylinderGeometry( 0.2, 0.2, 0.2, 32 );
+const material5 = new THREE.MeshStandardMaterial( {color: 0xff0000,transparent:true, opacity: 0.9, metalness:0.5, roughness:0.6} );
+const cylinder5 = new THREE.Mesh( geometry5, material5 );
+cylinder5.rotation.x= 0.4
+cylinder5.position.set(11.64,3.05,-8.2)
+
+const geometry6 = new THREE.CylinderGeometry( 0.2, 0.2, 0.2, 32 );
+const material6 = new THREE.MeshStandardMaterial( {color: 0xff0000,transparent:true, opacity: 0.9, metalness:0.5, roughness:0.6} );
+const cylinder6 = new THREE.Mesh( geometry6, material6 );
+cylinder6.rotation.x= 0.4
+cylinder6.position.set(13.18,3.05,-8.2)
+
+
+
+
+//button press animation
+//const mesh = new THREE.Mesh(geometry, material);
+
+var clipContainer = []
+//var mixerContainer = []
+
+function bpAnimation ( mesh, startPosition, endPosition )  {
+	console.log("added animation to button" + mesh)
+  //mesh.userData.mixer = new THREE.AnimationMixer(mesh);
+
+  let track = new THREE.VectorKeyframeTrack(
+    '.position',
+    [0, 1,2],
+    [
+      startPosition.x,
+      startPosition.y,
+      startPosition.z,
+      endPosition.x,
+      endPosition.y,
+      endPosition.z,
+			startPosition.x,
+      startPosition.y,
+      startPosition.z,
+    ]
+
+  );
+  const animationClip = new THREE.AnimationClip(null, 2, [track]);
+  //const animationAction = mesh.userData.mixer.clipAction(animationClip);
+  //animationAction.setLoop(THREE.LoopOnce);
+  //animationAction.play();
+  //mesh.userData.clock = new THREE.Clock();
+	clipContainer.push(animationClip)
+	mesh.userData.index = clipContainer.length-1
+
+};
+
+
+
+
+bpAnimation(cylinder1, cylinder1.position, new THREE.Vector3(cylinder1.position.x, cylinder1.position.y-0.16, cylinder1.position.z))
+bpAnimation(cylinder2, cylinder2.position, new THREE.Vector3(cylinder2.position.x, cylinder2.position.y-0.16, cylinder2.position.z))
+bpAnimation(cylinder3, cylinder3.position, new THREE.Vector3(cylinder3.position.x, cylinder3.position.y-0.16, cylinder3.position.z))
+bpAnimation(cylinder4, cylinder4.position, new THREE.Vector3(cylinder4.position.x, cylinder4.position.y-0.16, cylinder4.position.z))
+bpAnimation(cylinder5, cylinder5.position, new THREE.Vector3(cylinder5.position.x, cylinder5.position.y-0.16, cylinder5.position.z))
+bpAnimation(cylinder6, cylinder6.position, new THREE.Vector3(cylinder6.position.x, cylinder6.position.y-0.16, cylinder6.position.z))
+
+
+scene.add( cylinder1, cylinder2, cylinder3, cylinder4, cylinder5, cylinder6 );
+
+
+//window
+var wGeo = new THREE.BoxGeometry( 24, 10, 2 );
+var wMat = new THREE.MeshStandardMaterial( {color: 0x7c7c7c, opacity: 0.4} );
+wMat.transparent = true
+var glass = new THREE.Mesh( wGeo, wMat );
+glass.position.set(11,9,-12)
+var SeparateScene = new THREE.Scene()
+SeparateScene.add(glass)
+
+
+//demo sphere
+const SpGeo = new THREE.SphereGeometry( 1.6, 32, 32 );
+const SpMat = new THREE.MeshStandardMaterial( {color: 0xffffff} );
+const sphere = new THREE.Mesh( SpGeo, SpMat );
+sphere.position.set(11.5,7,-16)
+sphere.castShadow = true
+SeparateScene.add(sphere)
+
+scene.add(SeparateScene)
+
+
+
+//Side GUI
+var gui = new GUI();
+
+function callGUI(update, gui){
+gui.add(studioL1, 'intensity',0,10)
+var from = gui.addFolder("from");
+from.add(studioL1.position,'x', -15,15).onChange(update)
+from.add(studioL1.position,'y', -15,15).onChange(update)
+from.add(studioL1.position,'z', -15,15).onChange(update)
+var to = gui.addFolder("to");
+to.add(studioL1.target.position,'x', -15,15).onChange(update)
+to.add(studioL1.target.position,'y', -15,15).onChange(update)
+to.add(studioL1.target.position,'z', -15,15).onChange(update)
+/*
+var cil = gui.addFolder("cil")
+cil.add(cylinder1.position,'x', -15,15).onChange(update)
+cil.add(cylinder1.position,'y', -15,15).onChange(update)
+cil.add(cylinder1.position,'z', -15,15).onChange(update)
+cil.add(cylinder1.rotation,'x', 0,2*3.1416).onChange(update)
+*/
+
+}
+
+callGUI(updateCamera, gui)
+const mouse = new THREE.Vector2();
+var raycaster = new THREE.Raycaster();
+//Controlls
+document.addEventListener( 'click', onClick );
+document.addEventListener	('keydown', onKeyPress)
+
+function onKeyPress(event) {
+	event.preventDefault();
+  var x = event.charCode || event.keyCode;
+  if (x == 119 || x == 87) { //w
+    if(camera.rotation.x<0.5){
+			camera.rotation.x +=0.01
+		}
+  }
+
+	//s
+	if (x == 115 || x == 83) {
+		if(camera.rotation.x>-0.5){
+			camera.rotation.x -=0.01
+		}
+	}
+
+
+	//a
+	if (x == 97 || x == 65) {
+		if(camera.rotation.y<0.5){
+			camera.rotation.y +=0.01
+		}
+	}
+
+	//d
+	if (x == 100 || x == 68) {
+		if(camera.rotation.y>-0.5){
+			camera.rotation.y -=0.01
+		}
+	}
+
+}
+
+
+function onClick(event){
+event.preventDefault();
+
+mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+}
+
+window.onresize = function () {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+};
+
+
+var studioL2 = new THREE.DirectionalLight(new THREE.Color(0xcccccc), 0);
+studioL2.castShadow = true
+studioL2.position.set(sphere.position.x+8, sphere.position.y-0.2, sphere.position.z+1.8);
+studioL2.target = sphere
+studioL2.shadow.bias = -0.004;
+studioL2.shadow.mapSize.width = 2048;
+studioL2.shadow.mapSize.height = 2048;
+
+studioL2.target.updateMatrixWorld();
+var helper = new THREE.DirectionalLightHelper( studioL2, 1 );
+scene.add(studioL2)
+
+
+
+
+var model
+	scene.add(camera)
+
+
+	var loader = new GLTFLoader()
+	loader.setPath("pr3/")
+	 loader.load( 'proeNormalOnly.glb', function ( gltf ) {
+	 model = gltf.scene;
+	 model.scale.set(5,5,5)
+	 model.rotation.z -=0.006
+	 model.castShadow = true
+	 model.recieveShadow = true
+
+	 gltf.scene.traverse( function( child ) {
+
+		if(child.isMesh){
+			child.castShadow = true;
+			child.receiveShadow = true;
+			child.geometry.computeVertexNormals();
+		}
+
+
+
+
+} );
+scene.add(model)
+
+
+
+});
+const t1 ='text.png'
+const tLoader = new THREE.TextureLoader()
+tLoader.crossOrigin = "Anonymous"
+const te1 = tLoader.load(t1)
+
+const displace = tLoader.load(t1)
+
+var altMat = new THREE.MeshStandardMaterial( { map: te1, displacementMap:displace , displacementScale:0.3,
+					side: THREE.DoubleSide } )
+
+//animacion esfera
+					let track1 = new THREE.VectorKeyframeTrack(
+				    '.position',
+				    [0, 1,2],
+				    [
+				      sphere.position.x,
+				      sphere.position.y,
+				      sphere.position.z,
+				      sphere.position.x+1,
+				      sphere.position.y+1,
+				      sphere.position.z+1,
+							sphere.position.x,
+				      sphere.position.y,
+				      sphere.position.z,
+
+				    ])
+
+						let track2 = new THREE.VectorKeyframeTrack(
+							'.position',
+							[0, 1,2],
+							[
+								sphere.position.x,
+								sphere.position.y,
+								sphere.position.z,
+								sphere.position.x-1,
+								sphere.position.y-1,
+								sphere.position.z+3,
+								sphere.position.x,
+					      sphere.position.y,
+					      sphere.position.z,
+
+							])
+							let track3 = new THREE.VectorKeyframeTrack(
+								'.position',
+								[0, 1,2],
+								[
+									sphere.position.x,
+									sphere.position.y,
+									sphere.position.z,
+									sphere.position.x,
+						      sphere.position.y,
+						      sphere.position.z,
+								])
+
+				  const animationClipSp = new THREE.AnimationClip(null, 5, [track1,track2,track3]);
+
+
+
+
+let mixer, mixer2
+var clock = new THREE.Clock()
+var goingDown = false
+var goingUp = false
+var pLightOn = false
+var pLight2On = false
+
+var displaceOn = false
+
+animate();
+
+function animate() {
+	//console.log("anime")
+	requestAnimationFrame( animate );
+	//controls.update();
+	renderer.render(scene, camera);
+
+	raycaster.setFromCamera( mouse, camera );
+
+				const delta = clock.getDelta();
+
+				sphere.rotation.x +=0.1
+
+				if(mixer){
+					mixer.update( delta );
+				}
+				if(mixer2){
+					mixer2.update( delta );
+				}
+				if(goingDown && glass.position.y>-2){
+					glass.position.y -=0.05
+				}
+
+				if(goingUp && glass.position.y<8){
+					glass.position.y +=0.05
+				}
+
+
+				const intersects = raycaster.intersectObjects( scene.children );
+
+				if ( intersects.length > 0 ) {
+
+					if ( INTERSECTED != intersects[ 0 ].object) {
+
+						if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+
+						INTERSECTED = intersects[ 0 ].object;
+						INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+						INTERSECTED.material.emissive.setHex( 0xff0000 );
+						//console.log(INTERSECTED)
+
+						mixer = new THREE.AnimationMixer( INTERSECTED );
+
+						var clipAction = mixer.clipAction(clipContainer[INTERSECTED.userData.index])
+						clipAction.setLoop(THREE.LoopOnce);
+						clipAction.play()
+
+						if(INTERSECTED.userData.index==0){
+						//	console.log(scene)
+							if(glass.position.y>-2){
+								goingUp = false
+								goingDown = true
+							}else if (glass.position.y<=-1.9) {
+								goingDown = false
+								goingUp = true
+							}
+						}
+						if(INTERSECTED.userData.index == 1){
+							pLightOn= !pLightOn
+							if(pLightOn){
+								pLight1.intensity = 0.2
+							}else{
+								pLight1.intensity = 0
+							}
+						}
+
+						if(INTERSECTED.userData.index == 2){
+							pLight2On= !pLight2On
+							if(pLight2On){
+								studioL2.intensity = 0.4
+							}else{
+								studioL2.intensity = 0
+							}
+						}
+
+						if(INTERSECTED.userData.index == 3){
+							displaceOn=!displaceOn
+							if(displaceOn){
+								sphere.material = altMat
+								sphere.material.displacementScale=0.3
+								studioL2.target.updateMatrixWorld();
+							}else{
+								sphere.material = altMat
+								sphere.material.displacementScale=0
+								studioL2.target.updateMatrixWorld();
+							}
+
+						}
+						if(INTERSECTED.userData.index==4){
+							mixer2 = new THREE.AnimationMixer( sphere );
+
+							var clipAction2 = mixer2.clipAction(animationClipSp)
+							clipAction2.setLoop(THREE.LoopOnce);
+							clipAction2.play()
+
+						}
+
+						//bpAnimation(INTERSECTED, INTERSECTED.position, new THREE.Vector3(INTERSECTED.position.x, INTERSECTED.position.y-10.5, INTERSECTED.position.z))
+						//INTERSECTED.userData.mixer.update(INTERSECTED.userData.clock.getDelta());
+						//animate();
+
+
+
+
+					}
+
+				} else {
+
+					if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+
+					INTERSECTED = null;
+
+				}
+
+
+
+	//console.log("x:",camera.rotation.x,"| y:",camera.rotation.y,"| z:",camera.rotation.z)
+
+	//	studioL1.target.position.set(2,0,-2)
+
+};
+
+
+  </script>
+  </body>
+  </html>
