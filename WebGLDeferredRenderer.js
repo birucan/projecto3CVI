@@ -20,13 +20,20 @@
  *  - HemisphereLight
  *  - PointLight (distance < 0)
  *  - morphNormals
- *  - BumpMap
+ *  - BumpMapa
  *  - ToneMap
  *  - envMap
  *  - wrapAround
  *  - addEffect
  */
-import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/build/three.module.js';
+import * as THREEc from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/build/three.module.js';
+
+import * as _ from 'https://cdn.jsdelivr.net/npm/underscore@1.13.0/underscore-umd-min.js'
+
+
+var THREE = _.clone(THREEc);
+
+
 THREE.WebGLDeferredRenderer = function ( parameters ) {
 
 	parameters = parameters || {};
